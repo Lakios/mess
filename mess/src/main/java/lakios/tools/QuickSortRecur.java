@@ -1,4 +1,4 @@
-package lakios.tools;
+package src.main.java.lakios.tools;
 
 /**
  * Created by eugene on 30.03.15.

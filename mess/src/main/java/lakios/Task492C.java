@@ -1,4 +1,4 @@
-package lakios;
+package src.main.java.lakios;
 
 
 import java.util.HashMap;

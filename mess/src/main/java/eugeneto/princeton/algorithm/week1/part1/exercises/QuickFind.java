@@ -1,4 +1,4 @@
-package eugeneto;
+package eugeneto.princeton.algorithm.week1.part1.exercises;
 
 /**
  * Created by eugene on 27.09.15.

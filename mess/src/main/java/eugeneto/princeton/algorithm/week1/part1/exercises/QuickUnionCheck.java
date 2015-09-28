@@ -1,7 +1,6 @@
-package eugeneto;
+package eugeneto.princeton.algorithm.week1.part1.exercises;
 
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * Created by eugene on 27.09.15.
