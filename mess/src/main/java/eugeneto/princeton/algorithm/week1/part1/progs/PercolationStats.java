@@ -1,4 +1,4 @@
-package eugeneto.princeton.algorithm.week1.part1.prog;
+package eugeneto.princeton.algorithm.week1.part1.progs;
 
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;

@@ -1,4 +1,4 @@
-package eugeneto.princeton.algorithm.week1.part1.prog;
+package eugeneto.princeton.algorithm.week1.part1.progs;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
@@ -13,6 +13,7 @@ import java.util.stream.IntStream;
  */
 public class Percolation {
     private WeightedQuickUnionUF graph;
+    private WeightedQuickUnionUF fullGraph;
     private int N;
     private boolean[] opened;
 
@@ -21,9 +22,10 @@ public class Percolation {
         if (N <= 0) throw new IllegalArgumentException();
         this.N = N;
         graph = new WeightedQuickUnionUF(N*N + 2);
+        fullGraph = new WeightedQuickUnionUF(N*N + 1);
         opened = new boolean[N*N + 2];
-        IntStream.range(1, N + 1).forEach(i -> graph.union(0, i));
-        IntStream.range(1, N + 1).forEach(i -> graph.union(N * N + 1, N * N - i));
+        opened[0] = true;
+        opened[N*N + 1] = true;
     }
 
     // open site (row i, column j) if it is not open already
@@ -34,9 +36,13 @@ public class Percolation {
 
         if (i > 1) { // top
             unionIfOpened(me, me - N);
+        } else if (i == 1) {
+            unionIfOpened(me, 0);
         }
         if (i < N) { //bottom
             unionIfOpened(me, me + N);
+        } else if (i == N) {
+            unionIfOpened(me, N*N + 1);
         }
         if (j > 1) { // left
             unionIfOpened(me, me - 1);
@@ -55,7 +61,7 @@ public class Percolation {
     // is site (row i, column j) full?
     public boolean isFull(int i, int j) {
         validateIndexes(i, j);
-        return isOpen(i, j) && graph.connected(0, index(i, j));
+        return isOpen(i, j) && fullGraph.connected(0, index(i, j));
     }
 
     // does the system percolate?
@@ -64,7 +70,12 @@ public class Percolation {
     }
 
     private void unionIfOpened(int me, int i) {
-        if (opened[i]) graph.union(me, i);
+        if (opened[i]) {
+            graph.union(me, i);
+            if (me <= N*N && i <= N*N) {
+                fullGraph.union(me, i);
+            }
+        }
     }
 
     private int index(int i, int j) {
@@ -72,6 +83,6 @@ public class Percolation {
     }
 
     private void validateIndexes(int i, int j) {
-        if (i <= 0 || j <= 0 || i > N ||  j > N) throw new IllegalArgumentException(i + ":" + j);
+        if (i <= 0 || j <= 0 || i > N ||  j > N) throw new IndexOutOfBoundsException(i + ":" + j);
     }
 }
