@@ -1,8 +1,6 @@
-package eugeneto.princeton.algorithm.week1.part1.progs;
+package eugeneto.princeton.algorithm.week1.part1.exercises.week1.progs;
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
-
-import java.util.stream.IntStream;
 
 /**
  * Created with IntelliJ IDEA.
