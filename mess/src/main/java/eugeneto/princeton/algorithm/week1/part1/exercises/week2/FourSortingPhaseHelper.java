@@ -12,7 +12,7 @@ import java.util.Arrays;
  * To change this template use File | Settings | File Templates.
  */
 public class FourSortingPhaseHelper {
-    public static String str = "70 13 52 75 11 41 46 24 57 30";
+    public static String str = "88 56 91 31 34 25 71 49 37 11";
 
     public static void main(String[] args) {
         int[] arr = Utils.strToIntArray(str.split("\\s"));

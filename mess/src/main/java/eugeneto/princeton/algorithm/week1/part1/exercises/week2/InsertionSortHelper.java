@@ -12,7 +12,7 @@ import java.util.Arrays;
  * To change this template use File | Settings | File Templates.
  */
 public class InsertionSortHelper {
-    public static String str = "17 40 54 86 92 24 26 79 94 76";
+    public static String str = "12 25 50 61 75 70 68 18 41 63";
 
     private static int exchangeCount = 0;
 
@@ -29,7 +29,7 @@ public class InsertionSortHelper {
                     arr[j] = val;
                     exchangeCount++;
                     if (exchangeCount >= MAX_EX) {
-                        System.out.println(Arrays.toString(arr));
+                        System.out.println(Arrays.toString(arr).replaceAll(",", ""));
                         return;
                     }
                 } else {
