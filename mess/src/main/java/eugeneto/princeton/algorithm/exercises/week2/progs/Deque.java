@@ -1,4 +1,4 @@
-package eugeneto.princeton.algorithm.week1.part1.exercises.week2.progs;
+package eugeneto.princeton.algorithm.exercises.week2.progs;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -54,7 +54,7 @@ public class Deque<Item> implements Iterable<Item> {
             first = e;
             last = e;
         } else {
-            Element cur = first;
+            Element cur = last;
             last = e;
             cur.next = e;
             e.prev = cur;
@@ -68,9 +68,10 @@ public class Deque<Item> implements Iterable<Item> {
         Element cur = first;
         first = first.next;
         cur.next = null;
-        first.prev = null;
         if (size == 1) {
             last = null;
+        } else {
+            first.prev = null;
         }
         size--;
         return cur.item;
@@ -81,10 +82,11 @@ public class Deque<Item> implements Iterable<Item> {
         if (first == null) throw new NoSuchElementException();
         Element cur = last;
         last = last.prev;
-        last.next = null;
         cur.prev = null;
         if (size == 1) {
             first = null;
+        } else {
+            last.next = null;
         }
         size--;
         return cur.item;
@@ -116,7 +118,13 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-
+        Deque<Integer> deque = new Deque<>();
+        deque.isEmpty();
+        deque.addLast(1);
+        deque.addLast(2);
+        deque.addLast(3);
+        deque.removeLast();
+        deque.removeLast();
     }
 
     private class Element {

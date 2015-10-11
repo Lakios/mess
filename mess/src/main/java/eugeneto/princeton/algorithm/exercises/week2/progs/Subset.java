@@ -1,4 +1,4 @@
-package eugeneto.princeton.algorithm.week1.part1.exercises.week2.progs;
+package eugeneto.princeton.algorithm.exercises.week2.progs;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;

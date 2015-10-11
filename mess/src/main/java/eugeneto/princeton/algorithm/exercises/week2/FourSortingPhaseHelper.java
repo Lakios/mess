@@ -1,6 +1,6 @@
-package eugeneto.princeton.algorithm.week1.part1.exercises.week2;
+package eugeneto.princeton.algorithm.exercises.week2;
 
-import eugeneto.princeton.algorithm.week1.part1.Utils;
+import eugeneto.princeton.algorithm.Utils;
 
 import java.util.Arrays;
 

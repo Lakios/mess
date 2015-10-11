@@ -1,6 +1,5 @@
-package eugeneto.princeton.algorithm.week1.part1.exercises.week2.progs;
+package eugeneto.princeton.algorithm.exercises.week2.progs;
 
-import com.sun.xml.internal.fastinfoset.stax.events.ReadIterator;
 import edu.princeton.cs.algs4.StdRandom;
 
 import java.util.Arrays;
@@ -16,7 +15,7 @@ import java.util.NoSuchElementException;
  */
 public class RandomizedQueue<Item> implements Iterable<Item> {
     private int size;
-    private Item[] elementData = (Item[]) new Object[128];
+    private Item[] elementData = (Item[]) new Object[16];
 
     // construct an empty randomized queue
     public RandomizedQueue() {
@@ -35,6 +34,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
     // add the item
     public void enqueue(Item item) {
+        if (item == null) throw new NullPointerException();
         if (size == elementData.length) {
             grow();
         }
@@ -50,22 +50,38 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         elementData[index] = elementData[size - 1];
         elementData[size - 1] = null;
         size--;
+        if (size > 0 && size <= elementData.length / 4) {
+            elementData = Arrays.copyOf(elementData, elementData.length / 2);
+        }
         return val;
     }
 
     // return (but do not remove) a random item
     public Item sample() {
+        if (size == 0) throw new NoSuchElementException();
         return elementData[StdRandom.uniform(size)];
     }
 
     // return an independent iterator over items in random order
     public Iterator<Item> iterator() {
-        return new ReadIterator();
+        return new RIterator();
     }
 
     // unit testing
     public static void main(String[] args) {
-
+        RandomizedQueue<Integer> r = new RandomizedQueue<>();
+        r.enqueue(1);
+        r.enqueue(2);
+        r.enqueue(3);
+        r.enqueue(4);
+        r.enqueue(5);
+        r.enqueue(6);
+        System.out.println(r.dequeue());
+        System.out.println(r.dequeue());
+        System.out.println(r.dequeue());
+        System.out.println(r.dequeue());
+        System.out.println(r.dequeue());
+        System.out.println(r.dequeue());
     }
 
     private void grow() {
@@ -75,12 +91,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         elementData = Arrays.copyOf(elementData, newCapacity);
     }
 
-    public class RIterator implements Iterator<Item> {
+    private class RIterator implements Iterator<Item> {
         private Item[] items;
         private int index = 0;
 
         public RIterator() {
-            items = Arrays.copyOf(elementData, elementData.length);
+            items = Arrays.copyOf(elementData, size);
             StdRandom.shuffle(items);
         }
 

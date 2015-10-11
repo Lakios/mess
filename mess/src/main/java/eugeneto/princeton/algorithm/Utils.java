@@ -1,4 +1,4 @@
-package eugeneto.princeton.algorithm.week1.part1;
+package eugeneto.princeton.algorithm;
 
 /**
  * Created with IntelliJ IDEA.
