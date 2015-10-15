@@ -12,7 +12,7 @@ import java.util.Arrays;
  * To change this template use File | Settings | File Templates.
  */
 public class QSort3 {
-    private static String str = "59 84 30 47 59 48 89 59 60 26";
+    private static String str = "42 99 79 40 98 26 42 42 48 76";
 
     public static void main(String[] args) {
         int[] arr = Utils.strToIntArray(str.split("\\s"));
