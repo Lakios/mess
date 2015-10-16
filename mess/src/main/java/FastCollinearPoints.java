@@ -21,7 +21,7 @@ public class FastCollinearPoints {
             Point max = points[i];
             for (int k = i + 1; k < points.length; k++) {
                 double newSlope = points[i].slopeTo(points[k]);
-                if (newSlope - curSlope == 0) {
+                if (newSlope == curSlope) {
                     dotCounts++;
                 } else {
                     if (dotCounts >= 2) {

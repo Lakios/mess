@@ -3,6 +3,7 @@ import edu.princeton.cs.algs4.StdOut;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -16,7 +17,7 @@ import static java.util.stream.Collectors.toList;
  */
 public class Tess {
     public static void main(String[] args) throws Exception {
-        Point[] points = Files.lines(Paths.get("D:\\bm\\mess\\collinear-testing\\collinear\\input299.txt"))
+        Point[] points = Files.lines(Paths.get("D:\\bm\\mess\\collinear-testing\\collinear\\ooooo.txt"))
                 .skip(1)
                 .filter(s -> s != null && !s.trim().isEmpty())
                 .map(s -> s.replaceAll("\\s+", " "))
@@ -25,7 +26,7 @@ public class Tess {
                     return new Point(Integer.valueOf(s.split("\\s")[0]), Integer.valueOf(s.split("\\s")[1]));
                 }).collect(toList()).toArray(new Point[]{});
 
-
+        System.out.println(Arrays.toString(points));
         // draw the points
         StdDraw.show(0);
         StdDraw.setXscale(0, 32768);
@@ -37,6 +38,7 @@ public class Tess {
 
         // print and draw the line segments
         FastCollinearPoints collinear = new FastCollinearPoints(points);
+        System.out.println(collinear.segments().length);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
