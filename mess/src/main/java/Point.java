@@ -1,5 +1,3 @@
-package eugeneto.princeton.algorithm.exercises.week3.prog;
-
 import edu.princeton.cs.algs4.StdDraw;
 
 import java.util.Comparator;

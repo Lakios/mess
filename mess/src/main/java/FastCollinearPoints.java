@@ -1,5 +1,3 @@
-package eugeneto.princeton.algorithm.exercises.week3.prog;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
