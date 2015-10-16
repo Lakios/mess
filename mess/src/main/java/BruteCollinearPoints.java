@@ -1,6 +1,3 @@
-import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -20,12 +17,16 @@ public class BruteCollinearPoints {
 
         for (int i = 0; i < points.length; i++) {
             for (int j = i + 1; j < points.length; j++) {
+                if (points[i].compareTo(points[j]) == 0) {
+                    throw new IllegalArgumentException();
+                }
                 for (int k = j + 1; k < points.length; k++) {
+                    if (points[i].compareTo(points[k]) == 0 ||
+                            points[j].compareTo(points[k]) == 0) {
+                        throw new IllegalArgumentException();
+                    }
                     for (int l = k + 1; l < points.length; l++) {
-                        if (points[i].compareTo(points[j]) == 0 ||
-                                points[i].compareTo(points[k]) == 0 ||
-                                points[i].compareTo(points[l]) == 0 ||
-                                points[j].compareTo(points[k]) == 0 ||
+                        if (points[i].compareTo(points[l]) == 0 ||
                                 points[j].compareTo(points[l]) == 0 ||
                                 points[k].compareTo(points[l]) == 0) {
                             throw new IllegalArgumentException();
@@ -57,39 +58,5 @@ public class BruteCollinearPoints {
 
     public static void main(String[] args) {
 
-        // read the N points from a file
-       /* In in = new In(args[0]);
-        int N = in.readInt();
-        Point[] points = new Point[N];
-        for (int i = 0; i < N; i++) {
-            int x = in.readInt();
-            int y = in.readInt();
-            points[i] = new Point(x, y);
-        }*/
-        Point[] points = new Point[8];
-        points[0] = new Point(10000, 0);
-        points[1] = new Point(0, 10000);
-        points[2] = new Point(3000, 7000);
-        points[3] = new Point(7000, 3000);
-        points[4] = new Point(20000, 21000);
-        points[5] = new Point(3000, 4000);
-        points[6] = new Point(14000, 15000);
-        points[7] = new Point(6000, 7000);
-
-        // draw the points
-        StdDraw.show(0);
-        StdDraw.setXscale(0, 32768);
-        StdDraw.setYscale(0, 32768);
-        for (Point p : points) {
-            p.draw();
-        }
-        StdDraw.show();
-
-        // print and draw the line segments
-        FastCollinearPoints collinear = new FastCollinearPoints(points);
-        for (LineSegment segment : collinear.segments()) {
-            StdOut.println(segment);
-            segment.draw();
-        }
     }
 }
