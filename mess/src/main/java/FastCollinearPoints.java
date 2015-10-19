@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,12 +12,22 @@ import java.util.Arrays;
 public class FastCollinearPoints {
     private ArrayList<Point> minPoints = new ArrayList<>();
     private ArrayList<Point> maxPoints = new ArrayList<>();
+    private Point[] points;
 
     // finds all line segments containing 4 or more points
-    public FastCollinearPoints(Point[] points) {
-        Arrays.sort(points);
+    public FastCollinearPoints(Point[] p) {
+        points = new Point[p.length];
+        for (int i = 0; i < p.length; i++) points[i] = p[i];
+        if (points.length == 2 && points[0].compareTo(points[1]) == 0) throw new IllegalArgumentException();
         for (int i = 0; i < points.length - 1; i++) {
-            Arrays.sort(points, i, points.length);
+            int minI = i;
+            for (int j = i + 1; j < points.length; j++) {
+                if (points[j].compareTo(points[minI]) < 0) minI = j;
+            }
+            Point po = points[minI];
+            points[minI] = points[i];
+            points[i] = po;
+
             Arrays.sort(points, i + 1, points.length, points[i].slopeOrder());
             double curSlope = points[i].slopeTo(points[i + 1]);
             int dotCounts = -1;
@@ -46,14 +57,19 @@ public class FastCollinearPoints {
     }
 
     private void addLine(Point min, Point max) {
-        for (int i = 0; i < minPoints.size(); i++) {
-            if ((max.compareTo(maxPoints.get(i)) == 0 || min.compareTo(minPoints.get(i)) == 0)&&
-                    (min.slopeTo(max) == minPoints.get(i).slopeTo(maxPoints.get(i)))) {
-                return;
+        int i = Collections.binarySearch(maxPoints, max);
+        if (i >= 0) {
+            int original = i;
+            while (i < maxPoints.size() && maxPoints.get(i).compareTo(max) == 0) {
+                if (min.slopeTo(max) == minPoints.get(i).slopeTo(maxPoints.get(i))) return;
+                i++;
             }
+            minPoints.add(original, min);
+            maxPoints.add(original, max);
+        } else {
+            minPoints.add(-i - 1, min);
+            maxPoints.add(-i - 1, max);
         }
-        minPoints.add(min);
-        maxPoints.add(max);
     }
 
     // the number of line segments
