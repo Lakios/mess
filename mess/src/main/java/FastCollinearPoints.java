@@ -9,11 +9,14 @@ import java.util.Arrays;
  * To change this template use File | Settings | File Templates.
  */
 public class FastCollinearPoints {
-    private ArrayList<LineSegment> lines = new ArrayList<>();
+    private ArrayList<Point> minPoints = new ArrayList<>();
+    private ArrayList<Point> maxPoints = new ArrayList<>();
 
     // finds all line segments containing 4 or more points
     public FastCollinearPoints(Point[] points) {
+        Arrays.sort(points);
         for (int i = 0; i < points.length - 1; i++) {
+            Arrays.sort(points, i, points.length);
             Arrays.sort(points, i + 1, points.length, points[i].slopeOrder());
             double curSlope = points[i].slopeTo(points[i + 1]);
             int dotCounts = -1;
@@ -25,7 +28,7 @@ public class FastCollinearPoints {
                     dotCounts++;
                 } else {
                     if (dotCounts >= 2) {
-                        lines.add(new LineSegment(min, max));
+                        addLine(min, max);
                     }
                     curSlope = newSlope;
                     dotCounts = 0;
@@ -36,19 +39,34 @@ public class FastCollinearPoints {
                 if (max.compareTo(points[k]) < 0) max = points[k];
             }
             if (dotCounts >= 2) {
-                lines.add(new LineSegment(min, max));
+                addLine(min, max);
             }
         }
 
     }
 
+    private void addLine(Point min, Point max) {
+        for (int i = 0; i < minPoints.size(); i++) {
+            if ((max.compareTo(maxPoints.get(i)) == 0 || min.compareTo(minPoints.get(i)) == 0)&&
+                    (min.slopeTo(max) == minPoints.get(i).slopeTo(maxPoints.get(i)))) {
+                return;
+            }
+        }
+        minPoints.add(min);
+        maxPoints.add(max);
+    }
+
     // the number of line segments
     public int numberOfSegments() {
-        return lines.size();
+        return minPoints.size();
     }
 
     // the line segments
     public LineSegment[] segments() {
-        return lines.toArray(new LineSegment[]{});
+        LineSegment[] arr = new LineSegment[minPoints.size()];
+        for (int i = 0; i < minPoints.size(); i++) {
+            arr[i] = new LineSegment(minPoints.get(i), maxPoints.get(i));
+        }
+        return arr;
     }
 }

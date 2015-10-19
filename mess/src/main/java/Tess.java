@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toList;
  */
 public class Tess {
     public static void main(String[] args) throws Exception {
-        Point[] points = Files.lines(Paths.get("D:\\bm\\mess\\collinear-testing\\collinear\\ooooo.txt"))
+        Point[] points = Files.lines(Paths.get("D:\\bm\\mess\\collinear-testing\\collinear\\inarow.txt"))
                 .skip(1)
                 .filter(s -> s != null && !s.trim().isEmpty())
                 .map(s -> s.replaceAll("\\s+", " "))
