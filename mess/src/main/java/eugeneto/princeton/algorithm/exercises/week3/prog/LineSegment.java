@@ -1,3 +1,5 @@
+package eugeneto.princeton.algorithm.exercises.week3.prog;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Tochilkin

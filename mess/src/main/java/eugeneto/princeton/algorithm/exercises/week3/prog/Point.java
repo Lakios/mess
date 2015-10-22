@@ -1,3 +1,5 @@
+package eugeneto.princeton.algorithm.exercises.week3.prog;
+
 import edu.princeton.cs.algs4.StdDraw;
 
 import java.util.Comparator;
@@ -113,7 +115,7 @@ public class Point implements Comparable<Point> {
     }
 
     /**
-     * Unit tests the Point data type.
+     * Unit tests the eugeneto.princeton.algorithm.exercises.week3.prog.Point data type.
      */
     public static void main(String[] args) {
         /* YOUR CODE HERE */
