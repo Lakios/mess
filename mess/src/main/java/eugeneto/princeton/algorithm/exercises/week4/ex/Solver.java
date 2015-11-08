@@ -1,10 +1,9 @@
-package eugeneto.princeton.algorithm.exercises.week4;
+package eugeneto.princeton.algorithm.exercises.week4.ex;
 
 import edu.princeton.cs.algs4.MinPQ;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -21,11 +20,16 @@ public class Solver {
     // find a solution to the initial board (using the A* algorithm)
     public Solver(Board initial) {
         solution = new Solution(Arrays.asList(initial));
+        if (solution.isGoal()) return;
         solutions.insert(solution);
         int k = 0;
         while (true) {
             //System.out.println(initial);
-            solution = solutions.delMin();
+            try {
+                solution = solutions.delMin();
+            } catch (java.util.NoSuchElementException ex) {
+                return;
+            }
             initial = solution.getLast();
             Board prev = solution.getPrev();
             for (Board board : initial.neighbors()) {
@@ -35,13 +39,15 @@ public class Solver {
                 }
                 if(prev == null || !prev.equals(board)) {
                     Solution clone = solution.clone();
-                    clone.add(board);
-                    solutions.insert(clone);
+                    boolean added = clone.add(board);
+                    if (added) {
+                        solutions.insert(clone);
+                    }
                 }
             }
 
             k++;
-            if (k >= 1300) return;
+            if (k >= 100000) return;
         }
     }
 
@@ -76,13 +82,17 @@ public class Solver {
         public int compareTo(Solution o) {
             Board o2 = o.getLast();
             Board o1 = this.getLast();
-            int r = (o1.hamming() - o2.hamming()) + (this.boards.size() - o.boards.size());
+            int r = (o1.manhattan() - o2.manhattan()) + (this.boards.size() - o.boards.size());
             if (r != 0) return r;
-            return (o1.manhattan() - o2.manhattan()) + (this.boards.size() - o.boards.size());
+            return (o1.hamming() - o2.hamming()) + (this.boards.size() - o.boards.size());
         }
 
-        public void add(Board board) {
+        public boolean add(Board board) {
+            for (Board b : boards) {
+                if (b.equals(board)) return false;
+            }
             boards.add(board);
+            return true;
         }
 
         public boolean isGoal() {
@@ -102,7 +112,7 @@ public class Solver {
         }
 
         public int moves() {
-            return boards.size();
+            return isGoal() ? boards.size() : 0;
         }
 
         public List<Board> getBoards() {

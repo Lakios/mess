@@ -1,4 +1,4 @@
-package eugeneto.princeton.algorithm.exercises.week4;
+package eugeneto.princeton.algorithm.exercises.week4.ex;
 
 import edu.princeton.cs.algs4.StdOut;
 import eugeneto.princeton.algorithm.Utils;
@@ -14,6 +14,8 @@ public class Tester {
     public static void main(String[] args) {
         int[][] blocks = parseBlocks();
         Board initial = new Board(blocks);
+        System.out.println("init hamming " + initial.hamming());
+        System.out.println("init manhattan " + initial.manhattan());
         System.out.println("======================================");
         System.out.println(initial);
         System.out.println("======================================");
@@ -22,21 +24,24 @@ public class Tester {
         Solver solver = new Solver(initial);
 
         // print solution to standard output
-        if (!solver.isSolvable())
+        if (!solver.isSolvable()) {
             StdOut.println("No solution possible");
-        else {
             StdOut.println("Minimum number of moves = " + solver.moves());
-            for (Board board : solver.solution())
+        } else {
+            StdOut.println("Minimum number of moves = " + solver.moves());
+            for (Board board : solver.solution()) {
                 StdOut.println(board);
+                StdOut.println();
+            }
         }
     }
 
     private static int[][] parseBlocks() {
         // 3 / 18 steps !!!!
         String str =
-            " 1  4  3 \n" +
-            " 7  0  8 \n" +
-            " 6  5  2 ";
+            " 8  6  7 \n" +
+                    " 2  5  4 \n" +
+                    " 3  0  1 ";
         String[] split = str.split("\n");
         int[][] arr = new int[split.length][split.length];
         int k = 0;

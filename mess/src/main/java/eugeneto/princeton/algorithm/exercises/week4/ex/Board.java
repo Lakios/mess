@@ -1,4 +1,4 @@
-package eugeneto.princeton.algorithm.exercises.week4;
+package eugeneto.princeton.algorithm.exercises.week4.ex;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class Board {
         int count = 0;
         for (int i = 0; i < blocks.length; i++) {
             for (int j = 0; j < blocks[i].length; j++) {
-                if (!inPosition(i, j)) {
+                if (!inPosition(i, j) && blocks[i][j] != 0) {
                     count++;
                 }
             }
@@ -47,11 +47,11 @@ public class Board {
     public int manhattan() {
         int count = 0;
         for (int i = 0; i < blocks.length; i++) {
-            for (int j = 0; j < blocks[i].length; j++) {
-                if (!inPosition(i, j)) {
-                    count = count +
-                            Math.abs(blocks[i][j] / blocks.length - i) +
-                            Math.abs(blocks[i][j] % blocks.length - 1 - j);
+            for (int j = 0; j < blocks.length; j++) {
+                if (!inPosition(i, j) && blocks[i][j] != 0) {
+                    int step = Math.abs((blocks[i][j] - 1) / blocks.length - i) +
+                            Math.abs((blocks[i][j] - 1) % blocks.length - j);
+                    count = count + step;
                 }
             }
         }
@@ -73,7 +73,23 @@ public class Board {
     public Board twin() {
         if (blocks.length <= 1) return new Board(blocks);
         Board newBoard = new Board(blocks);
-        newBoard.exchange(0, 0, 1, 1);
+        int i1 = -1, j1 = -1, i2 = -1, j2 = -1;
+        l1: for (int i = 0; i < blocks.length; i++) {
+            for (int j = 0; j < blocks[i].length; j++) {
+                if (blocks[i][j] != 0) {
+                    if (i1 < 0) {
+                        i1 = i;
+                        j1 = j;
+                    } else {
+                        i2 = i;
+                        j2 = j;
+                        break l1;
+                    }
+                }
+            }
+        }
+        newBoard.exchange(i1, j1, i2, j2);
+
         return newBoard;
     }
 
@@ -131,15 +147,35 @@ public class Board {
 
     // string representation of this board (in the output format specified below)
     public String toString() {
-        String str = "";
+        String str = blocks.length + "\n";
         for (int i = 0; i < blocks.length; i++) {
-            for (int j = 0; j < blocks[i].length; j++) {
-                if (j > 0) str += "\t";
-                str += blocks[i][j];
+            if (i > 0) {
+                str += "\n";
             }
-            str += "\n";
+            for (int j = 0; j < blocks[i].length; j++) {
+                if (j > 0) str += " ";
+                str += rightPad(blocks[i][j], blocks.length);
+            }
         }
         return str;
+    }
+
+    private String rightPad(int val, int size) {
+        int maxPad = 0;
+
+        if (val <= 9) {
+            maxPad = 1;
+        } else if (val <= 99) {
+            maxPad = 0;
+        }
+
+        if (maxPad == 0) {
+            return "" + val;
+        } else if (maxPad == 1) {
+            return " " + val;
+        } else {
+            return "  " + val;
+        }
     }
 
     // unit tests (not graded)
