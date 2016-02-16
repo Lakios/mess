@@ -1,4 +1,4 @@
-package src.main.java.lakios;
+package lakios;
 
 import java.util.stream.IntStream;
 import java.util.Scanner;
